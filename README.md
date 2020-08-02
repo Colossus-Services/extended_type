@@ -19,7 +19,22 @@ A simple usage example:
 import 'package:extended_type/extended_type.dart';
 
 main() {
-  var awesome = new Awesome();
+
+  // URL Type:
+
+  var etURL = ETURL('http://www.google.com/');
+
+  // Automatic format identification:
+
+  ETURL etURL2 = ExtendedType.from('http://www.google.com/') ;
+
+  // Data-URL-Base64 type:
+
+  var etDataUrl = ETDataBase64URL.matchesFormat('data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7') ;
+      
+  print( etDataUrl.mimeType ); // Outputs: image/gif
+  print( etDataUrl.dataLength ); // Outputs: 216
+
 }
 ```
 
