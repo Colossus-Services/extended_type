@@ -70,7 +70,6 @@ void main() {
       expect(ExtendedType.identifyTypeID(s2), equals(ETDataBase64URL.TYPE_ID));
       expect(
           ExtendedType.identifyTypeName(s2), equals(ETDataBase64URL.TYPE_NAME));
-
     });
   });
 }
