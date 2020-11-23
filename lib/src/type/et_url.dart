@@ -112,6 +112,6 @@ class ETURL extends ExtendedType {
 
   @override
   String toString() {
-    return 'ETURL{url=${encodeAsString()}}';
+    return encodeAsString();
   }
 }
