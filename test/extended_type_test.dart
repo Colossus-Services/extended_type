@@ -38,6 +38,73 @@ void main() {
       expect(ExtendedType.identifyTypeName(s2), equals(ETURL.TYPE_NAME));
     });
 
+    test('ETEmail', () {
+      var s = 'joe@mail.com';
+
+      expect(ETEmail.matchesFormat(s), isTrue);
+      expect(ETEmail.matchesFormat('@a'), isFalse);
+      expect(ETEmail.matchesFormat('a@'), isFalse);
+      expect(ETEmail.matchesFormat('@'), isFalse);
+      expect(ETEmail.matchesFormat('asdasd'), isFalse);
+      expect(ETEmail.matchesFormat(''), isFalse);
+
+      var etEmail = ETEmail.parse(s);
+
+      expect(etEmail.user, equals('joe'));
+      expect(etEmail.host, equals('mail.com'));
+
+      var etEmail2 = ETEmail.parse(s);
+      expect(etEmail, equals(etEmail2));
+
+      var etEmail3 = ExtendedType.from(s);
+
+      expect(etEmail, equals(etEmail3));
+
+      var s2 = 'smith+x@mail2.com';
+      var etEmail4 = ExtendedType.from(s2) as ETEmail;
+
+      expect(etEmail4.user, equals('smith'));
+      expect(etEmail4.tag, equals('x'));
+      expect(etEmail4.host, equals('mail2.com'));
+
+      expect(ExtendedType.identifyTypeID(s2), equals(ETEmail.TYPE_ID));
+      expect(ExtendedType.identifyTypeName(s2), equals(ETEmail.TYPE_NAME));
+    });
+
+    test('ETEntityReference', () {
+      var s = 'user#11';
+
+      expect(ETEntityReference.matchesFormat(s), isTrue);
+      expect(ETEntityReference.matchesFormat('#1'), isFalse);
+      expect(ETEntityReference.matchesFormat('a#'), isFalse);
+      expect(ETEntityReference.matchesFormat('#'), isFalse);
+      expect(ETEntityReference.matchesFormat('asdasd'), isFalse);
+      expect(ETEntityReference.matchesFormat(''), isFalse);
+
+      var etRef = ETEntityReference.parse(s);
+
+      expect(etRef.type, equals('user'));
+      expect(etRef.id, equals(11));
+
+      var etRef2 = ETEntityReference.parse(s);
+      expect(etRef, equals(etRef2));
+
+      var etRef3 = ExtendedType.from(s);
+
+      expect(etRef, equals(etRef3));
+
+      var s2 = 'task#101';
+      var etRef4 = ExtendedType.from(s2) as ETEntityReference;
+
+      expect(etRef4.type, equals('task'));
+      expect(etRef4.id, equals(101));
+
+      expect(
+          ExtendedType.identifyTypeID(s2), equals(ETEntityReference.TYPE_ID));
+      expect(ExtendedType.identifyTypeName(s2),
+          equals(ETEntityReference.TYPE_NAME));
+    });
+
     test('ETDataBase64URL', () {
       var s =
           'data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7';

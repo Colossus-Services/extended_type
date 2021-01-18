@@ -45,6 +45,7 @@ class ETDataBase64URL extends ExtendedType {
   ETDataBase64URL.from(this.mimeType, this._data);
 
   factory ETDataBase64URL(String data) {
+    if (data == null || data.isEmpty) return null;
     var mimeType = DataURLBase64.parseMimeType(data);
     var payload = DataURLBase64.parsePayloadAsArrayBuffer(data);
     return ETDataBase64URL.from(mimeType, payload);

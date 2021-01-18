@@ -268,4 +268,6 @@ void _registerTypes() {
 
   ETURL.initialize();
   ETDataBase64URL.initialize();
+  ETEmail.initialize();
+  ETEntityReference.initialize();
 }

@@ -1,13 +1,13 @@
 name: extended_type
 description: Collection of platform agnostic types that can be converted from/to JSON and used in databases and UI.
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/Colossus-Services/extended_type
 
 environment:
   sdk: '>=2.7.0 <3.0.0'
 
 dependencies:
-  swiss_knife: ^2.5.18
+  swiss_knife: ^2.5.23
     #path: ../swiss_knife
 
 dev_dependencies:
