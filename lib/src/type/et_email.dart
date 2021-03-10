@@ -3,7 +3,7 @@ import 'package:swiss_knife/swiss_knife.dart';
 
 class _ExtendedTypeHandler extends ExtendedTypeHandler<ETEmail> {
   @override
-  ETEmail createInstance(String value) => ETEmail.parse(value);
+  ETEmail? createInstance(String value) => ETEmail.parse(value);
 
   @override
   int getTypeID() => ETEmail.TYPE_ID;
@@ -22,8 +22,6 @@ class ETEmail extends ExtendedType {
   }
 
   static bool matchesFormat(String data) {
-    if (data == null) return false;
-
     var length = data.length;
     if (length < 3) return false;
 
@@ -96,16 +94,18 @@ class ETEmail extends ExtendedType {
 
   static final String TYPE_NAME = 'email';
 
-  String _user;
+  final String _user;
 
-  String _tag;
+  final String? _tag;
 
-  String _host;
+  final String _host;
 
   ETEmail(this._user, this._tag, this._host);
 
-  factory ETEmail.parse(String email) {
-    if (email == null || email.isEmpty) return null;
+  static ETEmail? parse(String email) {
+    if (email.length < 3) return null;
+
+    email = email.trim();
 
     var idx = email.indexOf('@');
     if (idx < 1) return null;
@@ -115,7 +115,7 @@ class ETEmail extends ExtendedType {
     var idx2 = email.indexOf('+');
 
     String user;
-    String tag;
+    String? tag;
     String host;
 
     if (idx2 < 0) {
@@ -145,7 +145,7 @@ class ETEmail extends ExtendedType {
 
   String get user => _user;
 
-  String get tag => _tag;
+  String? get tag => _tag;
 
   String get host => _host;
 

@@ -7,7 +7,7 @@ void main() {
   var dataURLBase64 =
       'data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7';
 
-  var etData = ETDataBase64URL(dataURLBase64);
+  var etData = ETDataBase64URL.parse(dataURLBase64)!;
 
   if (etData.isImage) {
     var fileName = etData.isImageJPEG ? 'image.jpeg' : 'image.png';

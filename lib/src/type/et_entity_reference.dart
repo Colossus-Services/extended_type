@@ -3,7 +3,7 @@ import 'package:swiss_knife/swiss_knife.dart';
 
 class _ExtendedTypeHandler extends ExtendedTypeHandler<ETEntityReference> {
   @override
-  ETEntityReference createInstance(String value) =>
+  ETEntityReference? createInstance(String value) =>
       ETEntityReference.parse(value);
 
   @override
@@ -22,8 +22,38 @@ class ETEntityReference extends ExtendedType {
     ExtendedType.registerTypeHandler(_ExtendedTypeHandler());
   }
 
+  /// Parses [ref] to a [List] of IDs. Returns [def] if parse fails.
+  static List<int>? parseIDs(dynamic ref, [List<int>? def]) {
+    if (ref == null) return def;
+    if (ref is Iterable) {
+      var ids = ref.map((e) => parseID(e)).toList();
+      return ids.isNotEmpty ? ids as List<int>? : (def ?? ids as List<int>?);
+    } else {
+      var id = parseID(ref);
+      return id != null ? [id] : def;
+    }
+  }
+
+  /// Parses [ref] to an ID. Returns [def] if parse fails.
+  static int? parseID(dynamic ref, [int? def]) {
+    if (ref == null) return def;
+    if (ref is int) return ref;
+    if (ref is double) return ref.toInt();
+    if (ref is ETEntityReference) return ref.id;
+
+    var s = ref.toString();
+    var idx = s.indexOf('#');
+
+    if (idx > 0) {
+      var idStr = s.substring(idx + 1);
+      return parseInt(idStr, def);
+    } else {
+      return parseInt(s, def);
+    }
+  }
+
   static bool matchesFormat(String data) {
-    if (data == null) return false;
+    if (data.length < 3) return false;
 
     var length = data.length;
     if (length < 3) return false;
@@ -62,14 +92,16 @@ class ETEntityReference extends ExtendedType {
 
   static final String TYPE_NAME = 'entity_reference';
 
-  String _type;
+  final String _type;
 
-  int _id;
+  final int _id;
 
   ETEntityReference(this._type, this._id);
 
-  factory ETEntityReference.parse(String ref) {
-    if (ref == null || ref.isEmpty) return null;
+  static ETEntityReference? parse(String ref) {
+    if (ref.length < 3) return null;
+
+    ref = ref.trim();
 
     var idx = ref.indexOf('#');
     if (idx < 1) return null;
@@ -80,7 +112,7 @@ class ETEntityReference extends ExtendedType {
     if (!matchesType(typePart, 0, typePart.length)) return null;
     if (!matchesID(idPart, 0, idPart.length)) return null;
 
-    var id = parseInt(idPart);
+    var id = parseInt(idPart)!;
 
     return ETEntityReference(typePart, id);
   }

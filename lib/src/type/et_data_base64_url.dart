@@ -6,7 +6,7 @@ import 'package:swiss_knife/swiss_knife.dart';
 
 class _ExtendedTypeHandler extends ExtendedTypeHandler<ETDataBase64URL> {
   @override
-  ETDataBase64URL createInstance(String value) => ETDataBase64URL(value);
+  ETDataBase64URL? createInstance(String value) => ETDataBase64URL.parse(value);
 
   @override
   int getTypeID() => ETDataBase64URL.TYPE_ID;
@@ -25,8 +25,7 @@ class ETDataBase64URL extends ExtendedType {
   }
 
   static bool matchesFormat(String data) {
-    if (data == null) return false;
-    if (!data.startsWith('data:')) return false;
+    if (data.length < 13 || !data.startsWith('data:')) return false;
 
     var idx = data.indexOf(',');
     if (idx < 12) return false;
@@ -38,16 +37,16 @@ class ETDataBase64URL extends ExtendedType {
   }
 
   /// Returns the [MimeType] of data.
-  final MimeType mimeType;
+  final MimeType? mimeType;
 
   final Uint8List _data;
 
   ETDataBase64URL.from(this.mimeType, this._data);
 
-  factory ETDataBase64URL(String data) {
-    if (data == null || data.isEmpty) return null;
+  static ETDataBase64URL? parse(String? data) {
+    if (data == null || data.length < 13) return null;
     var mimeType = DataURLBase64.parseMimeType(data);
-    var payload = DataURLBase64.parsePayloadAsArrayBuffer(data);
+    var payload = DataURLBase64.parsePayloadAsArrayBuffer(data)!;
     return ETDataBase64URL.from(mimeType, payload);
   }
 
@@ -72,16 +71,16 @@ class ETDataBase64URL extends ExtendedType {
   int get dataLength => _data.length;
 
   /// Returns [true] if is an image [mimeType].
-  bool get isImage => mimeType.isImage;
+  bool get isImage => mimeType?.isImage ?? false;
 
   /// Returns [true] if is a PNG image [mimeType].
-  bool get isImagePNG => mimeType.isImagePNG;
+  bool get isImagePNG => mimeType?.isImagePNG ?? false;
 
   /// Returns [true] if is a JPEG image [mimeType].
-  bool get isImageJPEG => mimeType.isImageJPEG;
+  bool get isImageJPEG => mimeType?.isImageJPEG ?? false;
 
   /// Returns [true] if is a video [mimeType].
-  bool get isVideo => mimeType.isVideo;
+  bool get isVideo => mimeType?.isVideo ?? false;
 
   @override
   bool operator ==(Object other) =>

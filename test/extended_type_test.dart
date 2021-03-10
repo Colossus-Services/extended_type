@@ -48,7 +48,7 @@ void main() {
       expect(ETEmail.matchesFormat('asdasd'), isFalse);
       expect(ETEmail.matchesFormat(''), isFalse);
 
-      var etEmail = ETEmail.parse(s);
+      var etEmail = ETEmail.parse(s)!;
 
       expect(etEmail.user, equals('joe'));
       expect(etEmail.host, equals('mail.com'));
@@ -81,7 +81,7 @@ void main() {
       expect(ETEntityReference.matchesFormat('asdasd'), isFalse);
       expect(ETEntityReference.matchesFormat(''), isFalse);
 
-      var etRef = ETEntityReference.parse(s);
+      var etRef = ETEntityReference.parse(s)!;
 
       expect(etRef.type, equals('user'));
       expect(etRef.id, equals(11));
@@ -112,7 +112,7 @@ void main() {
       expect(ETDataBase64URL.matchesFormat(s), isTrue);
       expect(ETDataBase64URL.matchesFormat('data:image'), isFalse);
 
-      var etData = ETDataBase64URL(s);
+      var etData = ETDataBase64URL.parse(s)!;
 
       expect(etData.mimeType.toString(), equals('image/gif'));
       expect(etData.dataLength, equals(216));
@@ -122,7 +122,7 @@ void main() {
       expect(etData.getOperations(), isNotEmpty);
       expect(etData.getAvailableOperations(), isNotEmpty);
 
-      var etData2 = ETDataBase64URL(etData.encodeAsString());
+      var etData2 = ETDataBase64URL.parse(etData.encodeAsString())!;
 
       expect(etData.dataLength, equals(etData2.dataLength));
       expect(etData.data, equals(etData2.data));

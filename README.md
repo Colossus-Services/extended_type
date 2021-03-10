@@ -1,6 +1,9 @@
 # Extended_Type
 
 [![pub package](https://img.shields.io/pub/v/extended_type.svg?logo=dart&logoColor=00b9fc)](https://pub.dartlang.org/packages/extended_type)
+[![Null Safety](https://img.shields.io/badge/null-safety-brightgreen)](https://dart.dev/null-safety)
+
+
 [![CI](https://img.shields.io/github/workflow/status/Colossus-Services/extended_type/Dart%20CI/master?logo=github-actions&logoColor=white)](https://github.com/Colossus-Services/extended_type/actions)
 [![GitHub Tag](https://img.shields.io/github/v/tag/Colossus-Services/extended_type?logo=git&logoColor=white)](https://github.com/Colossus-Services/extended_type/releases)
 [![New Commits](https://img.shields.io/github/commits-since/Colossus-Services/extended_type/latest?logo=git&logoColor=white)](https://github.com/Colossus-Services/extended_type/network)
@@ -55,7 +58,8 @@ Graciliano M. Passos: [gmpassos@GitHub][gmpassos_github].
 
 ## License
 
-[Artistic License - Version 2.0][artistic_license]
+[Apache License - Version 2.0][apache_license]
+
 
 
 [gmpassos_github]: https://github.com/gmpassos

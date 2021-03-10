@@ -22,8 +22,6 @@ class ETURL extends ExtendedType {
   }
 
   static bool matchesFormat(String data) {
-    if (data == null) return false;
-
     var length = data.length;
     if (length < 3) return false;
 

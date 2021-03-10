@@ -16,7 +16,7 @@ abstract class ExtendedType {
     var typeName = typeHandler.getTypeName();
     var typeID = typeHandler.getTypeID();
 
-    if (typeName == null || typeName.isEmpty || hasBlankChar(typeName)) {
+    if (typeName.isEmpty || hasBlankChar(typeName)) {
       throw StateError('Invalid ExtendedType name: $typeName');
     }
     if (typeID <= 0) throw StateError("ExtendedType ID can't be <= 0: $typeID");
@@ -37,23 +37,24 @@ abstract class ExtendedType {
       List.from(typeHandlersRegistered.values);
 
   /// Returns a [ExtendedTypeHandler] by [typeName].
-  static T getExtendedTypeHandlerByName<T extends ExtendedTypeHandler>(
+  static T? getExtendedTypeHandlerByName<T extends ExtendedTypeHandler>(
       String typeName) {
     initialize();
-    T extendedTypeHandler = typeHandlersRegistered[typeName];
-    extendedTypeHandler ??= typeHandlersRegistered[typeName.toLowerCase()];
+    var extendedTypeHandler = typeHandlersRegistered[typeName] as T?;
+    extendedTypeHandler ??=
+        typeHandlersRegistered[typeName.toLowerCase()] as T?;
     return extendedTypeHandler;
   }
 
   /// Returns a [ExtendedTypeHandler] by [typeID].
-  static T getExtendedTypeHandlerByID<T extends ExtendedTypeHandler>(
+  static T? getExtendedTypeHandlerByID<T extends ExtendedTypeHandler>(
       int typeID) {
     initialize();
-    return typeHandlersRegisteredIDs[typeID];
+    return typeHandlersRegisteredIDs[typeID] as T?;
   }
 
   /// Identify format [ExtendedTypeHandler].
-  static ExtendedTypeHandler identifyTypeHandler(String value) {
+  static ExtendedTypeHandler? identifyTypeHandler(String value) {
     initialize();
     for (var handler in typeHandlersRegistered.values) {
       if (handler.matchesFormat(value)) {
@@ -64,7 +65,7 @@ abstract class ExtendedType {
   }
 
   /// Identify format type name.
-  static String identifyTypeName(String value) {
+  static String? identifyTypeName(String value) {
     var typeHandler = identifyTypeHandler(value);
     return typeHandler != null ? typeHandler.getTypeName() : null;
   }
@@ -76,20 +77,20 @@ abstract class ExtendedType {
   }
 
   /// Parses to a [ExtendedType] with [typeName].
-  static T fromByName<T extends ExtendedType>(String typeName, String value) {
+  static T? fromByName<T extends ExtendedType?>(String typeName, String value) {
     var typeHandler = getExtendedTypeHandlerByName(typeName);
-    return typeHandler?.createInstance(value);
+    return typeHandler?.createInstance(value) as T?;
   }
 
   /// Parses to a [ExtendedType] with [typeID].
-  static T fromByID<T extends ExtendedType>(int typeID, String value) {
+  static T? fromByID<T extends ExtendedType>(int typeID, String value) {
     var typeHandler = getExtendedTypeHandlerByID(typeID);
-    return typeHandler.createInstance(value);
+    return typeHandler?.createInstance(value) as T?;
   }
 
   /// Identifies format and parses to a [ExtendedType] instance.
-  static T from<T extends ExtendedType>(String value) {
-    var typeName = identifyTypeName(value);
+  static T? from<T extends ExtendedType>(String value) {
+    var typeName = identifyTypeName(value)!;
     return fromByName(typeName, value);
   }
 
@@ -102,12 +103,11 @@ abstract class ExtendedType {
   /// Encodes this instances as [String].
   String encodeAsString();
 
-  List getParameters() => null;
+  List? getParameters() => null;
 
-  String getParametersLine() => null;
+  String? getParametersLine() => null;
 
   bool equalsParameters(ExtendedType other) {
-    if (other == null) return false;
     return isEqualsDeep(getParameters(), other.getParameters());
   }
 
@@ -116,15 +116,15 @@ abstract class ExtendedType {
     return encodeAsString() == value;
   }
 
-  List<Operation> getOperations() => null;
+  List<Operation>? getOperations() => null;
 
-  List<Operation> getAvailableOperations() => null;
+  List<Operation>? getAvailableOperations() => null;
 }
 
 /// Base classe for types handlers.
 abstract class ExtendedTypeHandler<T extends ExtendedType> {
   /// Creates an instance of this type handler parsing [value].
-  T createInstance(String value);
+  T? createInstance(String value);
 
   /// Returns the type name.
   String getTypeName();
@@ -141,40 +141,39 @@ class Operation {
 
   final String description;
 
-  final List<OperationParameter> _parameters;
+  final List<OperationParameter>? _parameters;
 
   Operation(this.name, this.description, [this._parameters]);
 
-  List<OperationParameter> get parameters => _parameters;
+  List<OperationParameter>? get parameters => _parameters;
 
-  OperationParameter getParameter(int index) =>
-      _parameters != null ? _parameters[index] : null;
+  OperationParameter? getParameter(int index) =>
+      _parameters != null ? _parameters![index] : null;
 
-  int get parametersSize => _parameters != null ? _parameters.length : 0;
+  int get parametersSize => _parameters != null ? _parameters!.length : 0;
 
-  bool get hasParameters => _parameters != null && _parameters.isNotEmpty;
+  bool get hasParameters => _parameters != null && _parameters!.isNotEmpty;
 
-  static List<String> splitParametersParts(String data) {
-    if (data == null) return null;
-
+  static List<String>? splitParametersParts(String data) {
     data = data.trim();
-    return data.split(RegExp(r'\s*;\s*'));
+    if (data.isEmpty) return null;
+    var list = data.split(RegExp(r'\s*;\s*'));
+    return list.isNotEmpty ? list : null;
   }
 
-  List parseValues(String data) {
-    if (data == null) return null;
+  List? parseValues(String data) {
     var parts = splitParametersParts(data);
     return parseValuesFromList(parts);
   }
 
-  List parseValuesFromList(List<String> parts) {
-    if (parts == null) return null;
+  List? parseValuesFromList(List<String>? parts) {
+    if (parts == null || parts.isEmpty) return null;
 
     var values = [];
 
     for (var i = 0; i < values.length; i++) {
       var part = parts[i];
-      var parameter = parameters[i];
+      var parameter = parameters![i];
       values[i] = parameter.parseValue(part);
     }
 
@@ -190,7 +189,7 @@ class Operation {
     str.write(name);
 
     str.write('(');
-    str.write(parameters.join(','));
+    str.write(parameters!.join(','));
     str.write(')');
 
     return str.toString();
@@ -199,7 +198,7 @@ class Operation {
 
 enum OperationParameterType { INT, FLOAT, STRING }
 
-String getOperationParameterTypeName(OperationParameterType type) {
+String? getOperationParameterTypeName(OperationParameterType type) {
   switch (type) {
     case OperationParameterType.INT:
       return 'INT';
@@ -235,7 +234,7 @@ class OperationParameter {
 
   OperationParameter(this.type, this.name);
 
-  T parseValue<T>(String data) {
+  T? parseValue<T>(String data) {
     return parseOperationParameterTypeValue(type, data);
   }
 
@@ -248,7 +247,7 @@ class OperationParameter {
 class OperationCall {
   final Operation operation;
 
-  final List parametersValues;
+  final List? parametersValues;
 
   OperationCall(this.operation, this.parametersValues);
 
