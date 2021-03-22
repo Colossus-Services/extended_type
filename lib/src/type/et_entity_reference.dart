@@ -26,8 +26,8 @@ class ETEntityReference extends ExtendedType {
   static List<int>? parseIDs(dynamic ref, [List<int>? def]) {
     if (ref == null) return def;
     if (ref is Iterable) {
-      var ids = ref.map((e) => parseID(e)).toList();
-      return ids.isNotEmpty ? ids as List<int>? : (def ?? ids as List<int>?);
+      var ids = ref.map((e) => parseID(e)).whereType<int>().toList();
+      return ids.isNotEmpty ? ids : def;
     } else {
       var id = parseID(ref);
       return id != null ? [id] : def;
@@ -97,6 +97,24 @@ class ETEntityReference extends ExtendedType {
   final int _id;
 
   ETEntityReference(this._type, this._id);
+
+  static ETEntityReference? from(dynamic json) {
+    if (json == null) return null;
+    if (json is ETEntityReference) return json;
+
+    if (json is String) return ETEntityReference.parse(json);
+
+    if (json is List) {
+      var type = parseString(json[0]);
+      var id = parseInt(json[1]);
+
+      if (type != null && id != null) {
+        return ETEntityReference(type, id);
+      }
+    }
+
+    return null;
+  }
 
   static ETEntityReference? parse(String ref) {
     if (ref.length < 3) return null;

@@ -1,3 +1,8 @@
+## 2.0.1
+
+- Added `ETEntityReference.from`.
+- swiss_knife: ^3.0.6
+
 ## 2.0.0
 
 - Dart 2.12.0:
