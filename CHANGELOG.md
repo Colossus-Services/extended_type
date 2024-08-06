@@ -3,6 +3,7 @@
 - sdk: '>=3.3.0 <4.0.0'
 
 - swiss_knife: ^3.2.0
+- dependency_validator: ^4.1.0
 - pedantic: ^1.11.1
 - test: ^1.25.8
 
