@@ -1,3 +1,11 @@
+## 2.1.0
+
+- sdk: '>=3.3.0 <4.0.0'
+
+- swiss_knife: ^3.2.0
+- pedantic: ^1.11.1
+- test: ^1.25.8
+
 ## 2.0.1
 
 - Added `ETEntityReference.from`.

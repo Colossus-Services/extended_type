@@ -65,7 +65,7 @@ class ETDataBase64URL extends ExtendedType {
     return 'data:$mimeType;base64,${base64.encode(_data)}';
   }
 
-  Uint8List get data => UnmodifiableUint8ListView(_data);
+  Uint8List get data => _data.asUnmodifiableView();
 
   /// Returns the data bytes length.
   int get dataLength => _data.length;

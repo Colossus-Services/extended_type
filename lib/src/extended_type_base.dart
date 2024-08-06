@@ -148,11 +148,11 @@ class Operation {
   List<OperationParameter>? get parameters => _parameters;
 
   OperationParameter? getParameter(int index) =>
-      _parameters != null ? _parameters![index] : null;
+      _parameters != null ? _parameters[index] : null;
 
-  int get parametersSize => _parameters != null ? _parameters!.length : 0;
+  int get parametersSize => _parameters != null ? _parameters.length : 0;
 
-  bool get hasParameters => _parameters != null && _parameters!.isNotEmpty;
+  bool get hasParameters => _parameters != null && _parameters.isNotEmpty;
 
   static List<String>? splitParametersParts(String data) {
     data = data.trim();

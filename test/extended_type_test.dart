@@ -1,6 +1,4 @@
 import 'package:extended_type/extended_type.dart';
-import 'package:extended_type/src/type/et_data_base64_url.dart';
-import 'package:extended_type/src/type/et_url.dart';
 import 'package:test/test.dart';
 
 void main() {
