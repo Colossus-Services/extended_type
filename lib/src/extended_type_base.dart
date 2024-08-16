@@ -101,7 +101,7 @@ abstract class ExtendedType {
   int get typeID;
 
   /// Encodes this instances as [String].
-  String encodeAsString();
+  String encodeAsString({bool pretty = false});
 
   List? getParameters() => null;
 
