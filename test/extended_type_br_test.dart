@@ -18,6 +18,11 @@ void main() {
       expect(ETCNPJ.matchesFormat(c3), isTrue);
       expect(ETCNPJ.matchesFormat(c4), isTrue);
 
+      expect(ETCNPJ.matchesValid(c1), isFalse);
+      expect(ETCNPJ.matchesValid(c2), isFalse);
+      expect(ETCNPJ.matchesValid(c3), isTrue);
+      expect(ETCNPJ.matchesValid(c4), isTrue);
+
       expect(ETCNPJ.matchesFormat('1234567890'), isFalse);
       expect(ETCNPJ.matchesFormat(cErrDV1), isFalse);
       expect(ETCNPJ.matchesFormat(cErrDV2), isFalse);
@@ -57,6 +62,13 @@ void main() {
 
       expect(ETCPF.matchesFormat(c1), isTrue);
       expect(ETCPF.matchesFormat(c2), isTrue);
+      expect(ETCPF.matchesFormat(c3), isTrue);
+      expect(ETCPF.matchesFormat(c4), isTrue);
+
+      expect(ETCPF.matchesValid(c1), isFalse);
+      expect(ETCPF.matchesValid(c2), isFalse);
+      expect(ETCPF.matchesValid(c3), isTrue);
+      expect(ETCPF.matchesValid(c4), isTrue);
 
       expect(ETCPF.matchesFormat('123456789'), isFalse);
       expect(ETCPF.matchesFormat(cErrDV1), isFalse);

@@ -37,6 +37,12 @@ class ETCPF extends ExtendedType {
     return true;
   }
 
+  static bool matchesValid(String data) {
+    if (!matchesFormat(data)) return false;
+    var et = ETCPF.parse(data);
+    return et?.validate() ?? false;
+  }
+
   static final int TYPE_ID = 55101;
 
   static final String TYPE_NAME = 'cpf';

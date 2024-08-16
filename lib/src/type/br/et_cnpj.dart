@@ -39,6 +39,12 @@ class ETCNPJ extends ExtendedType {
     return true;
   }
 
+  static bool matchesValid(String data) {
+    if (!matchesFormat(data)) return false;
+    var et = ETCNPJ.parse(data);
+    return et?.validate() ?? false;
+  }
+
   static final int TYPE_ID = 55102;
 
   static final String TYPE_NAME = 'cnpj';
