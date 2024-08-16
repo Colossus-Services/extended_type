@@ -24,7 +24,7 @@ class ETCNPJ extends ExtendedType {
     var length = data.length;
     if (length < 14) return false;
 
-    data = data.replaceAll(RegExp(r'[^0-9a-zA-Z]'), '');
+    data = data.replaceAll(_regexpNonAlphaNumeric, '');
 
     if (data.length != 14) return false;
 
@@ -39,7 +39,7 @@ class ETCNPJ extends ExtendedType {
     return true;
   }
 
-  static final int TYPE_ID = 55101;
+  static final int TYPE_ID = 55102;
 
   static final String TYPE_NAME = 'cnpj';
 
@@ -104,7 +104,7 @@ class ETCNPJ extends ExtendedType {
 
     cnpj = cnpj.toUpperCase();
 
-    // DB1:
+    // DV1:
     var sum1 = 0;
     for (var i = 0; i < 12; i++) {
       sum1 += (cnpj.codeUnitAt(i) - _code0) * _weightsDV1[i];
@@ -123,7 +123,31 @@ class ETCNPJ extends ExtendedType {
     var remainder2 = sum2 % 11;
     var dv2 = remainder2 < 2 ? 0 : 11 - remainder2;
 
-    return '$dv1$dv2';
+    var dv = '$dv1$dv2';
+    return dv;
+  }
+
+  static const invalids = <String>[
+    '12345678000195',
+    'A2345678000163',
+    '11111111000111',
+    '22222222000122',
+    '33333333000133',
+    '44444444000144',
+    '55555555000155',
+    '66666666000166',
+    '77777777000177',
+    '88888888000188',
+    '99999999000199',
+    '00000000000100',
+    '12345678000123',
+    '98765432000198',
+    '55544433000155',
+  ];
+
+  @override
+  bool validate() {
+    return !invalids.contains(toString());
   }
 
   @override
