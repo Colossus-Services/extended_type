@@ -1,3 +1,13 @@
+## 2.1.1
+
+- `ExtendedType`:
+  - `encodeAsString`: added named parameter `pretty = false`.
+
+- New `ETCNPJ`.
+- New `extended_type_br.dart`.
+
+- swiss_knife: ^3.2.1
+
 ## 2.1.0
 
 - sdk: '>=3.3.0 <4.0.0'
