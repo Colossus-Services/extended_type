@@ -152,7 +152,8 @@ class ETEmail extends ExtendedType {
   bool get hasTag => isNotEmptyString(_tag);
 
   @override
-  String encodeAsString() => hasTag ? '$_user+$_tag@$_host' : '$_user@$_host';
+  String encodeAsString({bool pretty = false}) =>
+      hasTag ? '$_user+$_tag@$_host' : '$_user@$_host';
 
   @override
   bool operator ==(Object other) =>

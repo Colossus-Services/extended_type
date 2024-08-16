@@ -146,7 +146,7 @@ class ETEntityReference extends ExtendedType {
   int get id => _id;
 
   @override
-  String encodeAsString() => '$_type#$_id';
+  String encodeAsString({bool pretty = false}) => '$_type#$_id';
 
   @override
   bool operator ==(Object other) =>

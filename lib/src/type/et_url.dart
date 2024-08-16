@@ -98,7 +98,7 @@ class ETURL extends ExtendedType {
   String get typeName => TYPE_NAME;
 
   @override
-  String encodeAsString() => url.toString();
+  String encodeAsString({bool pretty = false}) => url.toString();
 
   @override
   bool operator ==(Object other) =>

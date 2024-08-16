@@ -61,7 +61,7 @@ class ETDataBase64URL extends ExtendedType {
   String get typeName => TYPE_NAME;
 
   @override
-  String encodeAsString() {
+  String encodeAsString({bool pretty = false}) {
     return 'data:$mimeType;base64,${base64.encode(_data)}';
   }
 
