@@ -2,8 +2,11 @@
 
 - `ExtendedType`:
   - `encodeAsString`: added named parameter `pretty = false`.
+  - Added `validate()`.
 
 - New `ETCNPJ`.
+- New `ETCPF`.
+
 - New `extended_type_br.dart`.
 
 - swiss_knife: ^3.2.1
