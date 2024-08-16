@@ -32,6 +32,9 @@ void main() {
       expect(etCNPJ1.branch, equals('0001'));
       expect(etCNPJ1.dv, equals('95'));
       expect(etCNPJ1.validate(), isFalse);
+      expect(etCNPJ1.encodeAsString(), equals('12345678000195'));
+      expect(
+          etCNPJ1.encodeAsString(pretty: true), equals('12.345.678/0001-95'));
 
       var etCNPJ2 = ETCNPJ.parse(c2);
       expect(etCNPJ2!.code, equals('A2345678'));
@@ -78,6 +81,8 @@ void main() {
       expect(etCPF1!.code, equals('123456789'));
       expect(etCPF1.dv, equals('09'));
       expect(etCPF1.validate(), isFalse);
+      expect(etCPF1.encodeAsString(), equals('12345678909'));
+      expect(etCPF1.encodeAsString(pretty: true), equals('123.456.789-09'));
 
       var etCPF2 = ETCPF.parse(c2);
       expect(etCPF2!.code, equals('111111111'));
