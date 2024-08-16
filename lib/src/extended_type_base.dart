@@ -116,6 +116,9 @@ abstract class ExtendedType {
     return encodeAsString() == value;
   }
 
+  /// Validates this instance.
+  bool validate() => true;
+
   List<Operation>? getOperations() => null;
 
   List<Operation>? getAvailableOperations() => null;
